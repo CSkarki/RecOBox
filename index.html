@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic AI Recruitment Solution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+        
+        .architecture {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .agent-cluster {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .agent-cluster::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3));
+            border-radius: 50%;
+            transform: translate(30px, -30px);
+        }
+        
+        .agent-cluster:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .lead-gen { border-left-color: #e74c3c; }
+        .requirement { border-left-color: #3498db; }
+        .sourcing { border-left-color: #2ecc71; }
+        .engagement { border-left-color: #f39c12; }
+        .screening { border-left-color: #9b59b6; }
+        .coordination { border-left-color: #1abc9c; }
+        
+        .cluster-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cluster-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .lead-gen .cluster-icon { background: #e74c3c; }
+        .requirement .cluster-icon { background: #3498db; }
+        .sourcing .cluster-icon { background: #2ecc71; }
+        .engagement .cluster-icon { background: #f39c12; }
+        .screening .cluster-icon { background: #9b59b6; }
+        .coordination .cluster-icon { background: #1abc9c; }
+        
+        .agent {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid #ecf0f1;
+            transition: all 0.3s ease;
+        }
+        
+        .agent:hover {
+            border-color: #3498db;
+            background: #e8f4f8;
+        }
+        
+        .agent-name {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        .agent-desc {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .capabilities {
+            margin-top: 10px;
+        }
+        
+        .capability-tag {
+            display: inline-block;
+            background: #ecf0f1;
+            color: #2c3e50;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin: 2px;
+            border: 1px solid #bdc3c7;
+        }
+        
+        .workflow-section {
+            margin-top: 40px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .workflow-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .workflow-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .workflow-step {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 25px;
+            text-align: center;
+            min-width: 150px;
+            font-weight: bold;
+            position: relative;
+            flex: 1;
+            max-width: 200px;
+        }
+        
+        .workflow-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .data-flow {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .data-source {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 2px dashed #bdc3c7;
+            transition: all 0.3s ease;
+        }
+        
+        .data-source:hover {
+            border-color: #3498db;
+            background: #e8f4f8;
+        }
+        
+        .data-source-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .data-items {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        
+        .metrics-section {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transform: perspective(1000px) rotateY(0deg);
+            transition: transform 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: perspective(1000px) rotateY(5deg) translateY(-5px);
+        }
+        
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .metric-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .architecture {
+                grid-template-columns: 1fr;
+            }
+            
+            .workflow-flow {
+                flex-direction: column;
+            }
+            
+            .workflow-step:not(:last-child)::after {
+                content: '↓';
+                right: 50%;
+                bottom: -30px;
+                top: auto;
+                transform: translateX(50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Agentic AI Recruitment Solution</h1>
+            <p>Intelligent Multi-Agent System for End-to-End Recruitment Automation</p>
+        </div>
+        
+        <div class="architecture">
+            <!-- Lead Generation Cluster -->
+            <div class="agent-cluster lead-gen">
+                <div class="cluster-title">
+                    <div class="cluster-icon">🎯</div>
+                    Lead Generation Agents
+                </div>
+                
+                <div class="agent">
+                    <div class="agent-name">Prospect Hunter Agent</div>
+                    <div class="agent-desc">Continuously monitors job boards and company career pages for new opportunities</div>
+                    <div class="capabilities">
+                        <span class="capability-tag">Web Scraping</span>
+                        <span class="capability-tag">Real-time Alerts</span>
+                        <span class="capability-tag">Company Profiling</span>
+                    </div>
+                </div>
+                
+                <div class="agent">
+                    <div class="agent-name">Contact Discovery Agent</div>
+                    <div class="agent-desc">Identifies and validates hiring manager contacts using LinkedIn automation</div>
+                    <div class="capabilities">
+                        <span class="capability-tag">LinkedIn Automation</span>
+                        <span class="capability-tag">Email Discovery</span>
+                        <span class="capability-tag">Contact Validation</span>
+                    </div>
+                </div>
+                
+                <div class="agent">
+                    <div class="agent-name">Outreach Orchestrator</div>
+                    <div class="agent-desc">Manages multi-channel outreach campaigns with personalized messaging</div>
+                    <div class="capabilities">
+                        <span class="capability-tag">Email Sequences</span>
+                        <span class="capability-tag">LinkedIn Messages</span>
+                        <span class="capability-tag">WhatsApp API</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Requirement Processing Cluster -->
+            <div class="agent-cluster requirement">
+                <div class="cluster-title">
+                    <div class="cluster-icon">📋</div>
+                    Requirement Processing
+                </div>
+                
+                <div class="agent">
+                    <div class="agent-name">Document Intelligence Agent</div>
+                    <div class="agent-desc">Processes JDs from emails, PDFs, and documents using OCR and NLP</div>
+                    <div class="capabilities">
+                        <span class="capability-tag">OCR Processing</span>
+                        <span class="capability-tag">Email Parsing</span>
+                        <span class="capability-tag">Multi-format Support</span>
+                    </div>
+                </div>
+                
+                <div class="agent">
+                    <div class="agent-name">JD Enrichment Agent</div>
+                    <div class="agent-desc">Converts brief requirements into comprehensive job descriptions using LLM</div>
+                    <div class="capabilities">
+                        <span class="capability-tag">LLM Processing</span>
+                        <span class="capability-tag">Salary Benchmarking</span>
+                        <span class="capability-tag">Skills Taxonomy</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Candidate Sourcing Cluster -->
+            <div class="agent-cluster sourcing">
+                <div class="cluster-title">
+                    <div class="cluster-icon">🔍</div>
+                    Candidate Sourcing
+                </div>
+                
+                <div class="agent">
+                    <div class="agent-name">Profile Aggregator</div>
+                    <div class="agent-desc">Extracts and parses resumes from multiple job portals and LinkedIn</div>
+                    <div class="capabilities">
+                        <span class="capability-tag">Multi-portal APIs</span>
+                        <span class="capability-tag">Resume Parsing</span>
+                        <span class="capability-tag">Deduplication</span>
+                    </div>
+                </div>
+                
+                <div class="agent">
+                    <div class="agent-name">Matching Engine Agent</div>
+                    <div class="agent-desc">AI-powered candidate-job matching with advanced similarity scoring</div>
+                    <div class="capabilities">
+                        <span class="capability-tag">Vector Similarity</span>
+                        <span class="capability-tag">ML Scoring</span>
+                        <span class="capability-tag">Predictive Matching</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Candidate Engagement Cluster -->
+            <div class="agent-cluster engagement">
+                <div class="cluster-title">
+                    <div class="cluster-icon">💬</div>
+                    Candidate Engagement
+                </div>
+                
+                <div class="agent">
+                    <div class="agent-name">Multi-Channel Communicator</div>
+                    <div class="agent-desc">Manages personalized outreach across email, WhatsApp, and LinkedIn</div>
+                    <div class="capabilities">
+                        <span class="capability-tag">Email Campaigns</span>
+                        <span class="capability-tag">WhatsApp Business</span>
+                        <span class="capability-tag">LinkedIn Automation</span>
+                    </div>
+                </div>
+                
+                <div class="agent">
+                    <div class="agent-name">AI Voice Bot Agent</div>
+                    <div class="agent-desc">Conducts automated phone calls for initial candidate engagement</div>
+                    <div class="capabilities">
+                        <span class="capability-tag">Natural Conversations</span>
+                        <span class="capability-tag">Call Recording</span>
+                        <span class="capability-tag">Response Analysis</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Screening Cluster -->
+            <div class="agent-cluster screening">
+                <div class="cluster-title">
+                    <div class="cluster-icon">⚡</div>
+                    Intelligent Screening
+                </div>
+                
+                <div class="agent">
+                    <div class="agent-name">Pre-Screening Intelligence</div>
+                    <div class="agent-desc">Automated phone interviews with structured questioning and evaluation</div>
+                    <div class="capabilities">
+                        <span class="capability-tag">Structured Interviews</span>
+                        <span class="capability-tag">Technical Assessment</span>
+                        <span class="capability-tag">Soft Skills Analysis</span>
+                    </div>
+                </div>
+                
+                <div class="agent">
+                    <div class="agent-name">Scoring & Ranking Agent</div>
+                    <div class="agent-desc">Multi-dimensional candidate scoring and automated shortlisting</div>
+                    <div class="capabilities">
+                        <span class="capability-tag">ML Scoring Models</span>
+                        <span class="capability-tag">Predictive Analytics</span>
+                        <span class="capability-tag">Ranking Algorithms</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Interview Coordination Cluster -->
+            <div class="agent-cluster coordination">
+                <div class="cluster-title">
+                    <div class="cluster-icon">📅</div>
+                    Interview Coordination
+                </div>
+                
+                <div class="agent">
+                    <div class="agent-name">Calendar Management Agent</div>
+                    <div class="agent-desc">Intelligent scheduling with multi-party calendar synchronization</div>
+                    <div class="capabilities">
+                        <span class="capability-tag">Calendar APIs</span>
+                        <span class="capability-tag">Conflict Resolution</span>
+                        <span class="capability-tag">Auto-rescheduling</span>
+                    </div>
+                </div>
+                
+                <div class="agent">
+                    <div class="agent-name">Client Engagement Agent</div>
+                    <div class="agent-desc">Automated profile sharing and interview feedback collection</div>
+                    <div class="capabilities">
+                        <span class="capability-tag">Profile Formatting</span>
+                        <span class="capability-tag">Feedback Collection</span>
+                        <span class="capability-tag">Decision Tracking</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Workflow Section -->
+        <div class="workflow-section">
+            <div class="workflow-title">🔄 End-to-End Automation Workflow</div>
+            <div class="workflow-flow">
+                <div class="workflow-step">Lead Discovery</div>
+                <div class="workflow-step">JD Processing</div>
+                <div class="workflow-step">Candidate Sourcing</div>
+                <div class="workflow-step">AI Screening</div>
+                <div class="workflow-step">Interview Setup</div>
+                <div class="workflow-step">Client Delivery</div>
+            </div>
+        </div>
+        
+        <!-- Data Sources -->
+        <div class="workflow-section">
+            <div class="workflow-title">📊 Integrated Data Sources</div>
+            <div class="data-flow">
+                <div class="data-source">
+                    <div class="data-source-title">Job Portals</div>
+                    <div class="data-items">Naukri • Indeed • LinkedIn Jobs • Monster • TimesJobs</div>
+                </div>
+                <div class="data-source">
+                    <div class="data-source-title">Professional Networks</div>
+                    <div class="data-items">LinkedIn Profiles • GitHub • Stack Overflow • AngelList</div>
+                </div>
+                <div class="data-source">
+                    <div class="data-source-title">Communication Channels</div>
+                    <div class="data-items">Email • WhatsApp Business • LinkedIn Messages • Voice Calls</div>
+                </div>
+                <div class="data-source">
+                    <div class="data-source-title">Productivity Tools</div>
+                    <div class="data-items">Google Calendar • Outlook • Zoom • Teams • Slack</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Performance Metrics -->
+        <div class="workflow-section">
+            <div class="workflow-title">📈 Expected Performance Gains</div>
+            <div class="metrics-section">
+                <div class="metric-card">
+                    <div class="metric-value">80%</div>
+                    <div class="metric-label">Reduction in Manual Sourcing</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">60%</div>
+                    <div class="metric-label">Faster Screening Process</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">90%</div>
+                    <div class="metric-label">Task Automation</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">24/7</div>
+                    <div class="metric-label">Continuous Operation</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
